@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI FOR SUSTAINABILITY</title>
+    <link rel="stylesheet" href="design.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">AI X ENV</div>
+        <div class="nav-buttons">
+            <button onclick="login()">Sign In</button>
+            <button onclick="openContributionPanel()">🌱 Green Mission</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1>AI FOR SUSTAINABILITY</h1>
+            <p>Campus Sustainability Optimization Engine</p>
+
+            <div class="hero-buttons">
+                <button class="play-btn" onclick="openVideo()">▶ Demo</button>
+
+            
+            <!-- More Info Button -->
+            <button class="info-btn" onclick="showInfo()">More Info</button>
+
+            <!-- Info Modal Panel -->
+            <div id="infoModal" class="info-modal">
+                <div class="info-content">
+                    <span class="close-btn" onclick="closeInfo()">✖</span>
+                    <h2>🌿 Aim & Importance</h2>
+                    <div id="infoText"></div>
+                </div>
+            </div> </div>
+
+            <!-- Video Modal Container -->
+            <div id="videoModal" class="video-modal">
+                <div class="video-content">
+                    <span class="close-btn" onclick="closeVideo()">✖</span>
+
+                    <!-- Local video -->
+                    <video id="sustainabilityVideo" controls>
+                        <source src="sustainability.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+
+                    <!-- Facebook Video Embed -->
+                    <div id="fbVideoContainer" style="display:none;">
+                        <iframe id="fbVideo" src="" width="100%" height="100%"
+                            style="border:none; border-radius:12px; overflow:hidden;" scrolling="no" frameborder="0"
+                            allowfullscreen
+                            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                        </iframe>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Time -->
+    <div class="time-box">
+        <div id="clock"></div>
+        <div id="date"></div>
+    </div>
+
+    <!-- Scoreboard -->
+    <div class="scoreboard">
+        Points: <span id="points">0</span> |
+        Badge: <span id="badge">Beginner</span>
+    </div>
+    </div>
+    </div>
+
+    <!-- Weather -->
+    <section class="weather-section">
+        <h2>🌦 Current Weather</h2>
+        <div id="weather"></div>
+    </section>
+
+    <!-- News -->
+    <section class="news-section">
+        <h2>📰 Latest Geo News (India)</h2>
+        <div id="news"></div>
+    </section>
+
+    <!-- Contribution Categories -->
+    <div class="movie-row">
+        <h2>OPTIMIZE YOUR LIFE</h2>
+        <div class="movies">
+
+            <div class="rw">
+                <button onclick="openSuggestions('rain')">Suggestions</button>
+                <button onclick="openContributionPanel('rain')">Check</button>
+            </div>
+
+            <div class="sp">
+                <button onclick="openSuggestions('solar')">Suggestions</button>
+                <button onclick="openContributionPanel('solar')">Check</button>
+            </div>
+
+            <div class="eco">
+                <button onclick="openSuggestions('eco')">Suggestions</button>
+                <button onclick="openContributionPanel('eco')">Check</button>
+            </div>
+
+            <div class="climate">
+                <button onclick="openSuggestions('climate')">Suggestions</button>
+                <button onclick="openContributionPanel('climate')">Check</button>
+            </div>
+
+            <div class="electricity">
+                <button onclick="openSuggestions('electricity')">Suggestions</button>
+                <button onclick="openContributionPanel('electricity')">Check</button>
+            </div>
+
+            <div class="rf">
+                <button onclick="openSuggestions('forest')">Suggestions</button>
+                <button onclick="openContributionPanel('forest')">Check</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- AI Section -->
+    <section class="ai-section">
+        <h2>🤖 Ask Sustainability AI</h2>
+        <input type="text" id="prompt" placeholder="Ask about sustainability..." />
+        <button onclick="askAI()">Ask AI</button>
+        <div id="response"></div>
+    </section>
+
+    <div id="contributionPanel" class="contribution-panel">
+        <h2>🌱 Submit Contribution</h2>
+
+        <select id="actionSelect"></select><br><br>
+        <p id="proofInfo"></p>
+        <input type="file" id="proofUpload"><br><br>
+
+        <button onclick="submitContribution()">Submit</button>
+        <button onclick="closeContributionPanel()">Close</button>
+    </div>
+
+    <div id="suggestionPanel" class="contribution-panel">
+        <h2>🌍 Optimization Suggestions</h2>
+        <div id="suggestionText"></div>
+        <button onclick="closeSuggestions()">Close</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
