@@ -278,3 +278,41 @@ function openSuggestions(category) {
 function closeSuggestions() {
   document.getElementById("suggestionPanel").style.display = "none";
 }
+
+
+// Replace these with your actual Supabase details
+const SUPABASE_URL = 'https://your-project-id.supabase.co';
+const SUPABASE_KEY = 'your-anon-key';
+const supabase = lib.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const modal = document.getElementById('auth-modal');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const authSubmit = document.getElementById('auth-submit');
+const authTitle = document.getElementById('auth-title');
+
+function showAuth(type) {
+  modal.style.display = 'block';
+  authTitle.innerText = type === 'signup' ? 'Create Account' : 'Sign In';
+
+  authSubmit.onclick = async () => {
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
+    if (type === 'signup') {
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) alert(error.message);
+      else alert("Check your email for the confirmation link!");
+    } else {
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) alert(error.message);
+      else {
+        alert("Logged in successfully!");
+        localStorage.setItem("supabase_token", data.session.access_token);
+        modal.style.display = 'none';
+      }
+    }
+  };
+}
+
+SUPABASE_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnZXNzb2pxcmp3Ymh5dmptd3pzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0OTUzMTEsImV4cCI6MjA5MDA3MTMxMX0.NAsKwR3Yl_NdJHCqdx1uMRpOVCiW7Ci8rwqHNLelO1k

@@ -29,8 +29,10 @@ body {
     letter-spacing: 2px;
 }
 
+/* This is your base style with the font and padding you provided */
 .nav-buttons button {
-    background-color: #e50914;
+    background-color: #28a745;
+    /* Eco Green - change to #e50914 for Red */
     border: none;
     padding: 8px 18px;
     color: white;
@@ -39,6 +41,22 @@ body {
     cursor: pointer;
     transition: 0.3s;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+/* Hover effect to make it feel interactive */
+.nav-buttons button:hover {
+    background-color: #218838;
+    /* Darker green on hover */
+    opacity: 0.9;
+}
+
+/* If you want the Sign In and Sign Up buttons to be different colors */
+.btn-signup {
+    background-color: #28a745;
+}
+
+.btn-signin {
+    background-color: #555;
 }
 
 .nav-buttons button:hover {
@@ -122,14 +140,15 @@ body {
     transition: transform 0.3s;
     cursor: pointer;
 }
+
 .movie-card.movie-card-1 {
-            background-image: url("https://lh3.googleusercontent.com/gg-dl/AOI_d__PXEtPgJBc2xnnHlZGsgMbXLmmG4eEic6_AZPDbNJZOOrGqpMmSXZ3MqRWlRTJo90a_hn5boek-EhsefgK3TmRolVvj58DJ21Eysgvp3dJMUkuT8IqkgjvBRCbsCbkcmcQ1IP0RFHcG7FwA1twSAZ9on_EwdzWtaBxPbMVEsXWsWI=s1024-rj");
-            background-size: cover;
-            background-position: center;
-            border-radius: 6px;
-            height: 100%;
-            width: 100%;
-        }
+    background-image: url("https://lh3.googleusercontent.com/gg-dl/AOI_d__PXEtPgJBc2xnnHlZGsgMbXLmmG4eEic6_AZPDbNJZOOrGqpMmSXZ3MqRWlRTJo90a_hn5boek-EhsefgK3TmRolVvj58DJ21Eysgvp3dJMUkuT8IqkgjvBRCbsCbkcmcQ1IP0RFHcG7FwA1twSAZ9on_EwdzWtaBxPbMVEsXWsWI=s1024-rj");
+    background-size: cover;
+    background-position: center;
+    border-radius: 6px;
+    height: 100%;
+    width: 100%;
+}
 
 .movie-card:hover {
     transform: scale(1.1);

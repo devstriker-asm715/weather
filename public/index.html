@@ -5,19 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI FOR SUSTAINABILITY</title>
-    <link rel="stylesheet" href="design.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- Navbar -->
     <div class="navbar">
         <div class="logo">AI X ENV</div>
         <div class="nav-buttons">
-            <button onclick="login()">Sign In</button>
+            <button onclick="showAuth('signup')">Sign Up</button>
+            <button onclick="showAuth('login')">Sign In</button>
             <button onclick="openContributionPanel()">🌱 Green Mission</button>
         </div>
     </div>
+
+    <div id="auth-modal"
+        style="display:none; position:fixed; top:20%; left:35%; background:white; padding:20px; border:1px solid #ccc; z-index:1000;">
+        <h3 id="auth-title">Sign Up</h3>
+        <input type="email" id="email" placeholder="Email"><br><br>
+        <input type="password" id="password" placeholder="Password"><br><br>
+        <button id="auth-submit">Submit</button>
+        <button onclick="document.getElementById('auth-modal').style.display='none'">Close</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
     <!-- Hero Section -->
     <div class="hero">
