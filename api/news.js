@@ -5,12 +5,12 @@ export default async function handler(req, res) {
 
   try {
     const response = await axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.WEATHER_API_KEY}&units=metric`
+      `https://newsdata.io/api/1/news?apikey=${process.env.NEWSDATA_API_KEY}&q=${city}&language=en`
     );
 
     res.status(200).json(response.data);
   } catch (error) {
     console.error(error.message);
-    res.status(500).json({ error: "Weather fetch failed." });
+    res.status(500).json({ error: "News fetch failed." });
   }
 }
