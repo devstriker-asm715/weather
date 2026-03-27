@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Green Cover | AI X ENV</title>
+    <link rel="stylesheet" href="subpage-common.css">
+    <style>
+        .tree-stage {
+            font-size: 80px;
+            text-align: center;
+            transition: 2s;
+        }
+
+        .co2-counter {
+            font-size: 2rem;
+            color: #00ff88;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glass-container">
+        <h1>My Reforestation Contribution</h1>
+        <div class="tree-stage" id="tree">🌱</div>
+
+        <div class="card">
+            <h3>Carbon Offset</h3>
+            <p class="co2-counter">+<span id="co2Val">12</span> kg CO₂</p>
+            <p>You have contributed to a significant reduction in campus carbon overhead.</p>
+        </div>
+    </div>
+    <script>
+        // Simulate tree growth based on points
+        setTimeout(() => { document.getElementById('tree').innerText = "🌳"; }, 3000);
+    </script>
+</body>
+
+</html>

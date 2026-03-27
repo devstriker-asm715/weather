@@ -198,3 +198,392 @@ body {
     border-radius: 4px;
     margin-bottom: 20px;
 }
+
+
+
+
+
+
+
+/* ===============================
+   VIBRANT MODERN ACCENTS
+   =============================== */
+:root {
+    --primary-neon: #00ff88;
+    --secondary-neon: #00d4ff;
+    --accent-purple: #9d50bb;
+    --glass-bg: rgba(255, 255, 255, 0.07);
+    --glass-border: rgba(255, 255, 255, 0.15);
+}
+
+/* ===============================
+   MODERN ACTION CARDS (The "Movies" Divs)
+   ============================== */
+.movies>div {
+    min-width: 260px;
+    height: 380px;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 25px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+/* Individual Neon Glows for each category */
+.rw:hover {
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+    border-color: var(--secondary-neon);
+}
+
+.sp:hover {
+    box-shadow: 0 10px 30px rgba(255, 204, 0, 0.3);
+    border-color: #ffcc00;
+}
+
+.eco:hover {
+    box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+    border-color: var(--primary-neon);
+}
+
+.movies>div:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+.movies h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Card Buttons */
+.movies button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.movies button:hover {
+    background: white;
+    color: black;
+}
+
+/* ===============================
+   MODERN AUTH MODAL (Glassmorphism)
+   =============================== */
+.modal-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(20, 20, 20, 0.9);
+    backdrop-filter: blur(25px);
+    padding: 40px;
+    border-radius: 24px;
+    z-index: 2000;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.modal-panel h3 {
+    font-size: 2rem;
+    background: linear-gradient(to right, var(--primary-neon), var(--secondary-neon));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+.modal-panel input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    padding: 14px;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+.modal-panel input:focus {
+    border-color: var(--secondary-neon);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ===============================
+   THE NEW ACTION BUTTON (Submit/Sign In)
+   =============================== */
+.action-btn,
+#auth-submit {
+    width: 100%;
+    background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon));
+    color: #000;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.action-btn:hover,
+#auth-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5);
+    filter: brightness(1.1);
+}
+
+/* Close/Secondary Buttons */
+button[onclick*="none"],
+button[onclick*="close"] {
+    background: transparent;
+    color: #888;
+    border: none;
+    margin-top: 15px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+button[onclick*="none"]:hover {
+    color: white;
+}
+
+
+/* sign in nd up*/
+:root {
+    --primary-neon: #00ff88;
+    /* Vibrant Green */
+    --secondary-neon: #00d4ff;
+    /* Electric Blue */
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Modal Container with Glassmorphism */
+.modal-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(15, 15, 15, 0.9);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    padding: 40px;
+    border-radius: 28px;
+    z-index: 3000;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Neon Glow behind the modal */
+.modal-glow {
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 150px;
+    height: 150px;
+    background: var(--primary-neon);
+    filter: blur(80px);
+    opacity: 0.2;
+    z-index: -1;
+}
+
+/* Titles */
+#auth-title {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(to right, var(--primary-neon), var(--secondary-neon));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+}
+
+/* Input Fields */
+.input-group input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid var(--glass-border);
+    padding: 15px;
+    border-radius: 12px;
+    color: white;
+    margin-bottom: 12px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: var(--secondary-neon);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+}
+
+/* Main Submit Button */
+.action-btn {
+    width: 100%;
+    background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon));
+    color: #000;
+    border: none;
+    padding: 16px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s transform, 0.3s box-shadow;
+    margin-top: 10px;
+}
+
+.action-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+}
+
+/* Divider Line */
+.divider {
+    margin: 25px 0;
+    display: flex;
+    align-items: center;
+    color: #555;
+    font-size: 0.8rem;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #333;
+    margin: 0 10px;
+}
+
+/* Social Buttons */
+.social-login {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.social-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.social-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #777;
+}
+
+/* Footer & Close */
+.auth-footer {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.close-text-btn {
+    background: transparent;
+    border: none;
+    color: #555;
+    margin-top: 15px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    text-decoration: underline;
+}
+
+.close-text-btn:hover {
+    color: #aaa;
+}
+
+
+/* green mission */
+/* Mission Narrative Styling */
+.mission-narrative {
+    text-align: left;
+    font-size: 0.95rem;
+    color: #ccc;
+    line-height: 1.6;
+    background: rgba(0, 255, 136, 0.05);
+    padding: 20px;
+    border-radius: 15px;
+    border-left: 4px solid var(--primary-neon);
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.mission-narrative p {
+    margin-bottom: 12px;
+}
+
+.mission-narrative strong {
+    color: var(--primary-neon);
+}
+
+.mission-steps {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mission-steps ol {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.mission-steps li {
+    margin-bottom: 8px;
+    color: #eee;
+}
+
+/* Modern Select Styling */
+.modern-select {
+    width: 100%;
+    padding: 12px;
+    background: #222;
+    border: 1px solid var(--glass-border);
+    color: white;
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+}
+
+.file-input {
+    width: 100%;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed #555;
+    border-radius: 10px;
+    color: #888;
+}

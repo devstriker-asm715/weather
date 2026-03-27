@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Rainwater Harvesting | AI X ENV</title>
+    <link rel="stylesheet" href="rainwater.css">
+</head>
+
+<body>
+    <div class="sub-page-container">
+        <header>
+            <button onclick="window.location.href='index.html'">← Back</button>
+            <h1>Rainwater Harvesting</h1>
+        </header>
+
+        <main class="content-grid">
+            <section class="calculator-card">
+                <h2>Harvesting Calculator</h2>
+                <input type="number" id="roofArea" placeholder="Roof Area (sq meters)">
+                <input type="number" id="rainfall" placeholder="Avg Rainfall (mm)">
+                <button onclick="calculateWater()">Calculate Yield</button>
+                <div id="calcResult"></div>
+            </section>
+
+            <section class="visualizer">
+                <h2>Live Metrics</h2>
+                <div class="water-tracker">
+                    <div id="waterLevel" class="fill"></div>
+                </div>
+                <p>Water Savings Tracker: <span id="savedLitres">0</span> Litres</p>
+            </section>
+        </main>
+    </div>
+    <script src="rainwater.js"></script>
+</body>
+
+</html>

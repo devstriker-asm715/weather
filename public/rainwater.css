@@ -1,0 +1,51 @@
+body {
+    background: #0a0a0a;
+    color: white;
+    font-family: 'Arial', sans-serif;
+}
+
+.sub-page-container {
+    padding: 50px;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.calculator-card,
+.visualizer {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid #00d4ff;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+}
+
+.water-tracker {
+    width: 100px;
+    height: 200px;
+    border: 2px solid #00d4ff;
+    position: relative;
+    overflow: hidden;
+    margin: 20px auto;
+}
+
+.fill {
+    background: #00d4ff;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0%;
+    transition: height 1s;
+}

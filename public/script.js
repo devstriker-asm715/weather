@@ -5,9 +5,9 @@ window.addEventListener("DOMContentLoaded", () => {
   // These selectors MUST match the class names in your HTML <div> tags
   const backgrounds = {
     ".rw": "rain water.jpg",
-    ".sp": "https://i.pinimg.com/1200x/59/b6/1c/59b61c3f1da597576a180af5527d8adb.jpg",
-    ".electricity": "https://i.pinimg.com/1200x/a9/aa/5f/a9aa5f6e5d837d9cee61a3c7173f9528.jpg",
-    ".eco": "https://i.pinimg.com/736x/95/d9/cb/95d9cb7f1ab0f5b5c2ac3f4525173f1f.jpg",
+    ".sp": "solar.jpg",
+    ".electricity": "elec.jpg",
+    ".eco": "eco.jpg",
     ".climate": "climate.png",
     ".rf": "rf.jpg"
   };
@@ -26,19 +26,6 @@ window.addEventListener("DOMContentLoaded", () => {
   getWeather();
   getNews();
 });
-
-// ===============================
-// SUPABASE CONFIGURATION
-// ===============================
-// Enter your details from Supabase Settings > API
-const SUPABASE_URL = '';
-const SUPABASE_KEY = '';
-const supabaseClient = (typeof supabase !== 'undefined') ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
-
-// ===============================
-// GLOBAL VARIABLES & ACTION DATA
-// ===============================
-let totalPoints = 0;
 
 const actions = {
   rain: [
@@ -75,44 +62,63 @@ const actions = {
 // CONTRIBUTION SYSTEM
 // ===============================
 function openContributionPanel(category) {
+  const modal = document.getElementById("contributionPanel");
   const select = document.getElementById("actionSelect");
-  if (!select) return;
+  const brief = document.getElementById("mission-brief");
+
+  if (!modal || !select) return;
+
+  // Smoothly scroll the narrative back to the top if it exists
+  if (brief) {
+    brief.scrollTop = 0;
+  }
 
   select.innerHTML = "";
-  if (!actions[category]) {
-    // Default if no category passed
-    Object.values(actions).flat().forEach(action => {
-      const option = document.createElement("option");
-      option.value = action.code;
-      option.textContent = `${action.text} (+${action.points} pts)`;
-      select.appendChild(option);
-    });
-  } else {
+
+  if (actions[category]) {
     actions[category].forEach(action => {
       const option = document.createElement("option");
       option.value = action.code;
       option.textContent = `${action.text} (+${action.points} pts)`;
       select.appendChild(option);
     });
+  } else {
+    // Fallback: show all actions if no category is picked or "all" is passed
+    Object.values(actions).flat().forEach(action => {
+      const option = document.createElement("option");
+      option.value = action.code;
+      option.textContent = `${action.text} (+${action.points} pts)`;
+      select.appendChild(option);
+    });
   }
-  document.getElementById("contributionPanel").style.display = "block";
+
+  modal.style.display = "block";
 }
 
 function closeContributionPanel() {
-  document.getElementById("contributionPanel").style.display = "none";
+  const modal = document.getElementById("contributionPanel");
+  if (modal) modal.style.display = "none";
 }
 
-function submitContribution() {
-  const actionCode = document.getElementById("actionSelect").value;
+async function submitContribution() {
+  const actionSelect = document.getElementById("actionSelect");
   const fileInput = document.getElementById("proofUpload");
-  const proofUploaded = fileInput && fileInput.files.length > 0;
+  const user = (await supabaseClient.auth.getUser()).data.user;
 
-  if (!proofUploaded) {
+  if (!user) {
+    alert("Please Sign In to earn points!");
+    return;
+  }
+
+  if (!fileInput || fileInput.files.length === 0) {
     alert("Please upload proof (image/video).");
     return;
   }
 
+  const actionCode = actionSelect.value;
   let selectedAction = null;
+
+  // Find the action data
   Object.values(actions).forEach(category => {
     category.forEach(action => {
       if (action.code === actionCode) selectedAction = action;
@@ -120,11 +126,30 @@ function submitContribution() {
   });
 
   if (selectedAction) {
+    // 1. Update Local Variable
     totalPoints += selectedAction.points;
-    document.getElementById("points").innerText = totalPoints;
-    document.getElementById("badge").innerText = getBadge(totalPoints);
-    alert(`Contribution Added: ${selectedAction.text} (+${selectedAction.points} pts)`);
-    closeContributionPanel();
+
+    // 2. Sync with Supabase Database
+    const { error } = await supabaseClient
+      .from('profiles')
+      .upsert({
+        id: user.id,
+        points: totalPoints,
+        email: user.email,
+        badge: getBadge(totalPoints)
+      });
+
+    if (error) {
+      console.error("Database Sync Error:", error.message);
+      alert("Points earned locally, but failed to sync to cloud.");
+    } else {
+      // 3. Update UI
+      document.getElementById("points").innerText = totalPoints;
+      document.getElementById("badge").innerText = getBadge(totalPoints);
+
+      alert(`Mission Accomplished! +${selectedAction.points} points saved to your profile.`);
+      closeContributionPanel();
+    }
   }
 }
 
@@ -141,13 +166,119 @@ const suggestions = {
 };
 
 function openSuggestions(category) {
-  document.getElementById("suggestionText").innerText = suggestions[category] || "No suggestions available.";
-  document.getElementById("suggestionPanel").style.display = "block";
+  const panel = document.getElementById("suggestionPanel");
+  const text = document.getElementById("suggestionText");
+
+  if (!panel || !text) return;
+
+  // This finds the list of actions for the clicked category
+  const categoryActions = actions[category];
+
+  if (categoryActions) {
+    // This turns the array into a nice readable list
+    let listHTML = `<p style="margin-bottom: 10px;"><strong>Ways to earn points in this category:</strong></p><ul>`;
+
+    categoryActions.forEach(action => {
+      listHTML += `<li style="margin-bottom: 8px;">${action.text} - <span style="color: var(--primary-neon);">+${action.points} pts</span></li>`;
+    });
+
+    listHTML += `</ul>`;
+    text.innerHTML = listHTML;
+  } else {
+    // Fallback to the text descriptions if no actions match
+    text.innerText = suggestions[category] || "No specific actions found for this category.";
+  }
+
+  panel.style.display = "block";
 }
 
 function closeSuggestions() {
-  document.getElementById("suggestionPanel").style.display = "none";
+  const panel = document.getElementById("suggestionPanel");
+  if (panel) panel.style.display = "none";
 }
+
+
+
+// ===============================
+// SUPABASE CONFIGURATION
+// ===============================
+// Enter your details from Supabase Settings > API
+const SUPABASE_URL = 'sb_publishable_TlYG6vAL-Ac7h3HySY8q9A_68rY-L3y';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVnZXNzb2pxcmp3Ymh5dmptd3pzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0OTUzMTEsImV4cCI6MjA5MDA3MTMxMX0.NAsKwR3Yl_NdJHCqdx1uMRpOVCiW7Ci8rwqHNLelO1k';
+const supabaseClient = (typeof supabase !== 'undefined') ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+// ===============================
+// GLOBAL VARIABLES & ACTION DATA
+// ===============================
+let totalPoints = 0;
+
+
+
+// sign up , in , mission//
+
+async function showAuth(type) {
+  const modal = document.getElementById('auth-modal');
+  const title = document.getElementById('auth-title');
+  const submitBtn = document.getElementById('auth-submit');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+
+  // 1. Show the modal
+  modal.style.display = 'block';
+
+  // 2. Update UI based on type
+  if (type === 'signup') {
+    title.innerText = "Join the Movement";
+    submitBtn.innerText = "Create Account";
+  } else {
+    title.innerText = "Welcome Back";
+    submitBtn.innerText = "Sign In";
+  }
+
+  // 3. Handle the actual Database call
+  submitBtn.onclick = async () => {
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
+    if (!email || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    if (type === 'signup') {
+      const { data, error } = await supabaseClient.auth.signUp({ email, password });
+
+      if (error) {
+        alert("Sign Up Error: " + error.message);
+      } else {
+        // Change the modal content to show "Check Email" instructions
+        const modal = document.getElementById('auth-modal');
+        modal.innerHTML = `
+            <div class="modal-glow"></div>
+            <h3 style="color: var(--primary-neon);">📧 Check Your Inbox</h3>
+            <p style="margin: 20px 0; color: #ccc;">
+                We've sent a verification link to <strong>${email}</strong>.<br><br>
+                Please click the link to activate your account and start earning points!
+            </p>
+            <button class="action-btn" onclick="location.reload()">Got it!</button>
+        `;
+      }
+    }
+  }
+};
+
+async function signInWithProvider(providerName) {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: providerName, // 'google' or 'github'
+  });
+
+  if (error) alert("Social Login Error: " + error.message);
+}
+
+// Link them to your HTML buttons
+document.querySelector('.google').onclick = () => signInWithProvider('google');
+document.querySelector('.github').onclick = () => signInWithProvider('github');
+
 
 function showInfo() {
   document.getElementById("infoModal").style.display = "block";
@@ -163,35 +294,6 @@ function showInfo() {
 
 function closeInfo() {
   document.getElementById("infoModal").style.display = "none";
-}
-
-// ===============================
-// AUTHENTICATION (SUPABASE)
-// ===============================
-function showAuth(type) {
-  const modal = document.getElementById('auth-modal');
-  document.getElementById('auth-title').innerText = type === 'signup' ? 'Create Account' : 'Sign In';
-  modal.style.display = 'block';
-
-  document.getElementById('auth-submit').onclick = async () => {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    if (!supabaseClient) return alert("Please configure Supabase URL and Key first!");
-
-    if (type === 'signup') {
-      const { error } = await supabaseClient.auth.signUp({ email, password });
-      if (error) alert(error.message);
-      else alert("Success! Check your email for confirmation.");
-    } else {
-      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-      if (error) alert(error.message);
-      else {
-        alert("Welcome back!");
-        modal.style.display = 'none';
-      }
-    }
-  };
 }
 
 // ===============================
@@ -233,27 +335,40 @@ async function askAI() {
   const responseDiv = document.getElementById("response");
   const query = promptInput.value;
 
-  if (!query) return alert("Please enter a question!");
+  if (!query) return alert("Please enter a question! I am open to doubts");
 
-  responseDiv.innerText = "Processing with Sustainability AI...";
+  // UI Feedback: Show the user the AI is thinking
+  responseDiv.style.color = "#00ff88"; // Keep it vibrant!
+  responseDiv.innerText = "Consulting Sustainability AI...";
 
   try {
-    // This targets your Vercel/Localhost API endpoint
     const response = await fetch(`${getBaseUrl()}/api/ai`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt: query })
     });
 
+    if (!response.ok) throw new Error("API Offline");
+
     const data = await response.json();
-    responseDiv.innerText = data.reply || "AI is resting. Try again later!";
+    responseDiv.innerText = data.reply;
+
   } catch (err) {
-    // Fallback: If you haven't built the AI backend yet, show a smart response
+    // Smart Fallback: If the backend isn't ready, provide a simulated AI answer
+    console.error("AI Error:", err);
     setTimeout(() => {
-      responseDiv.innerText = `To optimize ${query}, try reducing energy waste and using renewable sources. (Backend connection pending)`;
-    }, 1000);
+      const fallbacks = [
+        `To optimize ${query}, consider life-cycle assessments and reducing carbon overhead.`,
+        `Regarding ${query}: Minimalist consumption is the most effective sustainability strategy.`,
+        `Interesting point on ${query}. Have you looked into the 'Circular Economy' approach for this?`
+      ];
+      const randomFallback = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+      responseDiv.innerText = `${randomFallback} (Demo Mode)`;
+      responseDiv.style.color = "#888";
+    }, 1200);
   }
 }
+
 
 // ===============================
 // UTILITIES (Time, Badges, Video)
@@ -283,3 +398,39 @@ function closeVideo() {
   videoModal.style.display = "none";
   if (videoElement) videoElement.pause();
 }
+
+
+// This runs automatically whenever the user's status changes
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  if (event === 'SIGNED_IN') {
+    console.log("User is now verified and signed in:", session.user);
+
+    // Update the UI: Hide Sign In buttons, show Profile
+    document.querySelector('.nav-buttons').innerHTML = `
+            <span style="color: var(--primary-neon); margin-right: 15px;">Welcome, Hero!</span>
+            <button class="action-btn" onclick="supabaseClient.auth.signOut()">Sign Out</button>
+        `;
+  }
+  if (event === 'SIGNED_OUT') {
+    location.reload(); // Refresh to show Login buttons again
+  }
+});
+
+// on login badge points nottodisturb //
+supabaseClient.auth.onAuthStateChange(async (event, session) => {
+  if (event === 'SIGNED_IN') {
+    // Fetch the user's saved points from the database
+    const { data, error } = await supabaseClient
+      .from('profiles')
+      .select('points')
+      .eq('id', session.user.id)
+      .single();
+
+    if (data) {
+      totalPoints = data.points;
+      document.getElementById("points").innerText = totalPoints;
+      document.getElementById("badge").innerText = getBadge(totalPoints);
+    }
+  }
+});
+

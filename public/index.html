@@ -15,18 +15,83 @@
         <div class="nav-buttons">
             <button onclick="showAuth('signup')">Sign Up</button>
             <button onclick="showAuth('login')">Sign In</button>
-            <button onclick="openContributionPanel('rain')">🌱 Green Mission</button>
+            <button onclick="openContributionPanel('all')">🌱 Green Mission</button>
         </div>
     </div>
 
-    <div id="auth-modal" class="modal-panel" style="display:none;">
-        <h3 id="auth-title">Sign Up</h3>
+
+    <div id="contributionPanel" class="modal-panel" style="display:none;">
+        <h2>🌱 Green Mission: The Power of One</h2>
+
+        <div id="mission-brief" class="mission-narrative">
+            <p>
+                The tapestry of our global environment is woven from the threads of individual choices. Historically,
+                movements like the 1970s <strong>Chipko Movement</strong> demonstrated how local villagers, by simply
+                embracing trees, could thwart massive deforestation. Today, the collective transition to LED lighting
+                and the rejection of single-use plastics are not merely trends; they are vital interventions.
+            </p>
+            <p>
+                When a single student opts for a reusable flask or installs a solar lamp, it triggers a <em>ripple
+                    effect</em>. Minimalist living reduces the "Ghost Acreage" required to support our consumption,
+                directly healing the micro-climate of our immediate surroundings.
+            </p>
+            <div class="mission-steps">
+                <strong>How to contribute:</strong>
+                <ol>
+                    <li><strong>Select:</strong> Choose a category that matches your current environment.</li>
+                    <li><strong>Act:</strong> Perform a high-impact, low-effort task (e.g., clearing a mudpool or
+                        switching to LEDs).</li>
+                    <li><strong>Verify:</strong> Upload a photo/video as digital proof of your contribution.</li>
+                    <li><strong>Level Up:</strong> Earn points to evolve your status from a 'Beginner' to an 'Earth
+                        Legend'.</li>
+                </ol>
+            </div>
+        </div>
+
         <br>
-        <input type="email" id="email" placeholder="Email"><br><br>
-        <input type="password" id="password" placeholder="Password"><br><br>
-        <button id="auth-submit" class="action-btn">Submit</button>
-        <button onclick="document.getElementById('auth-modal').style.display='none'">Close</button>
+        <select id="actionSelect" class="modern-select"></select>
+        <br><br>
+        <p style="font-size: 0.8rem; color: #888;">Step 3: Upload Proof (Required)</p>
+        <input type="file" id="proofUpload" class="file-input">
+        <br><br>
+
+        <div class="panel-buttons">
+            <button onclick="submitContribution()" class="action-btn">Validate Mission</button>
+            <button onclick="closeContributionPanel()" class="close-text-btn">Close</button>
+        </div>
     </div>
+
+
+    <div id="auth-modal" class="modal-panel" style="display:none;">
+        <div class="modal-glow"></div>
+        <h3 id="auth-title">Welcome Back</h3>
+        <p style="color: #888; margin-bottom: 20px; font-size: 0.9rem;">Join the sustainability movement</p>
+
+        <div class="input-group">
+            <input type="email" id="email" placeholder="Email Address" required>
+            <input type="password" id="password" placeholder="Password" required>
+        </div>
+
+        <button id="auth-submit" class="action-btn">Continue</button>
+
+        <div class="divider"><span>OR</span></div>
+
+        <div class="social-login">
+            <button class="social-btn google"><img src="https://www.svgrepo.com/show/355037/google.svg" width="18">
+                Google</button>
+            <button class="social-btn github"><img src="https://www.svgrepo.com/show/512317/github-142.svg" width="18">
+                GitHub</button>
+        </div>
+
+        <p class="auth-footer">
+            Don't have an account? <span onclick="showAuth('signup')"
+                style="color: var(--primary-neon); cursor: pointer;">Create one</span>
+        </p>
+
+        <button class="close-text-btn" onclick="document.getElementById('auth-modal').style.display='none'">Maybe
+            later</button>
+    </div>
+
 
     <div class="hero">
         <div class="hero-content">
@@ -43,11 +108,11 @@
                 <div id="infoText"></div>
             </div>
 
-            <div id="videoModal" class="modal-panel" style="display:none; max-width: 800px;">
+            <div id="videoModal" class="modal-panel" style="display:none; max-width: 1800px;">
                 <span class="close-btn" onclick="closeVideo()">✖</span>
                 <video id="sustainabilityVideo" controls style="width: 100%;">
                     <source src="sustainability.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
+
                 </video>
             </div>
         </div>
@@ -80,12 +145,13 @@
         <div class="movies">
             <div class="rw">
                 <h3>Rainwater</h3>
-                <button onclick="openSuggestions('rain')">Suggestions</button>
+                <button onclick="window.location.href='rainwater.html'">Full Stats</button>
                 <button onclick="openContributionPanel('rain')">Check</button>
             </div>
+
             <div class="sp">
                 <h3>Solar Power</h3>
-                <button onclick="openSuggestions('solar')">Suggestions</button>
+                <button onclick="window.location.href='solar.html'">Full Stats</button>
                 <button onclick="openContributionPanel('solar')">Check</button>
             </div>
             <div class="eco">

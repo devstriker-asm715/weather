@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Climate Monitoring | AI X ENV</title>
+    <link rel="stylesheet" href="subpage-common.css">
+    <link rel="stylesheet" href="climate.css">
+</head>
+
+<body id="climateBody">
+    <div class="glass-container">
+        <button class="back-btn" onclick="window.location.href='index.html'">←</button>
+        <h1 class="neon-text">Atmospheric Insights</h1>
+
+        <div class="aqi-display">
+            <h2>Current AQI: <span id="aqiVal">142</span></h2>
+            <p id="healthWarning" class="warning-box"></p>
+        </div>
+
+        <div class="weather-metrics">
+            <div class="metric">Temp: 32°C</div>
+            <div class="metric">Humidity: 65%</div>
+        </div>
+
+        <div id="particleCanvas"></div>
+    </div>
+    <script src="climate.js"></script>
+</body>
+
+</html>

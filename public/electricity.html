@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Energy Optimization | AI X ENV</title>
+    <link rel="stylesheet" href="subpage-common.css">
+    <style>
+        .meter {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            padding: 20px;
+            color: #0f0;
+            border: 3px solid #333;
+            display: inline-block;
+        }
+
+        .spike-graph {
+            height: 150px;
+            background: repeating-linear-gradient(90deg, transparent, transparent 40px, #222 41px);
+            border-bottom: 2px solid #ff0055;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glass-container">
+        <h1>Live Power Consumption</h1>
+        <div class="meter" id="liveMeter">000452.8 kWh</div>
+
+        <div class="card" style="margin-top:20px;">
+            <h3>Smart Leakage Alert</h3>
+            <p style="color: #ff0055;">"You wasted ₹120 this week in idle power usage."</p>
+        </div>
+
+        <div class="spike-graph">
+        </div>
+    </div>
+    <script>
+        setInterval(() => {
+            let val = parseFloat(document.getElementById('liveMeter').innerText);
+            document.getElementById('liveMeter').innerText = (val + 0.01).toFixed(1) + " kWh";
+        }, 1000);
+    </script>
+</body>
+
+</html>

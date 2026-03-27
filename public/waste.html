@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Eco Waste | AI X ENV</title>
+    <link rel="stylesheet" href="subpage-common.css">
+    <link rel="stylesheet" href="waste.css">
+</head>
+
+<body>
+    <div class="glass-container">
+        <header>
+            <button class="back-btn" onclick="window.location.href='index.html'">← Home</button>
+            <h1 class="neon-text">Eco Waste Tracker</h1>
+        </header>
+
+        <div class="stats-grid">
+            <div class="card bin-section">
+                <h3>Current Segregation Score</h3>
+                <div class="score-circle" id="segScore">85%</div>
+                <div class="bin-container">
+                    <div class="bin green">Organic</div>
+                    <div class="bin blue">Recycle</div>
+                    <div class="bin red">Hazard</div>
+                </div>
+            </div>
+
+            <div class="card smart-feature">
+                <h3>Impact Analysis</h3>
+                <p class="impact-text">"You prevented <span id="landfillWeight">2.4</span>kg waste from landfill this
+                    week."</p>
+                <div class="transform-box" id="transformAnim">♻️ ➜ 🌱</div>
+            </div>
+        </div>
+    </div>
+    <script src="waste.js"></script>
+</body>
+
+</html>
