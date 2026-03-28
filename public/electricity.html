@@ -1,48 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Energy Optimization | AI X ENV</title>
-    <link rel="stylesheet" href="subpage-common.css">
-    <style>
-        .meter {
-            font-family: 'Courier New', monospace;
-            background: #000;
-            padding: 20px;
-            color: #0f0;
-            border: 3px solid #333;
-            display: inline-block;
-        }
-
-        .spike-graph {
-            height: 150px;
-            background: repeating-linear-gradient(90deg, transparent, transparent 40px, #222 41px);
-            border-bottom: 2px solid #ff0055;
-            position: relative;
-        }
-    </style>
-</head>
-
-<body>
+<body id="electricityBody">
     <div class="glass-container">
-        <h1>Live Power Consumption</h1>
-        <div class="meter" id="liveMeter">000452.8 kWh</div>
+        <button class="back-btn" onclick="window.location.href='index.html'">←</button>
+        <h1 class="neon-text">Energy Optimization</h1>
 
-        <div class="card" style="margin-top:20px;">
-            <h3>Smart Leakage Alert</h3>
-            <p style="color: #ff0055;">"You wasted ₹120 this week in idle power usage."</p>
+        <div class="meter-box">
+            <div class="meter" id="liveMeter">000392.2 kWh</div>
+            <p>Live Reading Simulation</p>
         </div>
 
-        <div class="spike-graph">
+        <div class="card bill-upload-section">
+            <h3>Analyze Monthly Bill</h3>
+            <p>Upload your TPCODL/Electricity bill for AI insights.</p>
+            <input type="file" id="billInput" accept="image/*" onchange="analyzeBill()">
+            <div id="uploadStatus"></div>
+        </div>
+
+        <div id="analysisPanel" class="card" style="display:none; border-left: 5px solid #0f0;">
+            <h3>AI Usage Analysis</h3>
+            <div id="analysisContent"></div>
+            <div class="spike-graph" id="graph"></div>
         </div>
     </div>
-    <script>
-        setInterval(() => {
-            let val = parseFloat(document.getElementById('liveMeter').innerText);
-            document.getElementById('liveMeter').innerText = (val + 0.01).toFixed(1) + " kWh";
-        }, 1000);
-    </script>
-</body>
+    <div id="odometerSection" class="card" style="display:none; text-align:center;">
+        <h3>Monthly Energy Journey</h3>
+        <div class="odo-container">
+            <span class="odo-label">PREV</span>
+            <div id="prevOdo" class="meter-small">0000</div>
+            <span class="arrow">➞</span>
+            <div id="presOdo" class="meter-small odo-glow">0000</div>
+            <span class="odo-label">PRES</span>
+        </div>
+        <p id="unitSummary" style="color:#00ff88; margin-top:10px;"></p>
+    </div>
 
-</html>
+    <div id="smartInsights" class="content-grid" style="display:none; margin-top:20px;">
+        <div class="glass-panel-yellow">
+            <h4>⚡ Load Guard (CD: <span id="cdVal">0</span>)</h4>
+            <p id="loadTip" style="font-size:0.85rem;"></p>
+        </div>
+        <div class="glass-panel-blue">
+            <h4>🌊 Coastal Climate Tip</h4>
+            <p id="climateTip" style="font-size:0.85rem;"></p>
+        </div>
+    </div>
+    <script src="electricity.js"></script>
+</body>

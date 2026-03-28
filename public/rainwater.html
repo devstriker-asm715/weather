@@ -8,9 +8,13 @@
 </head>
 
 <body>
+    <video autoplay muted loop id="bg-video">
+        <source src="rainwater.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
     <div class="sub-page-container">
         <header>
-            <button onclick="window.location.href='index.html'">← Back</button>
+            <button class="glass-btn back-btn" onclick="window.location.href='index.html'">← Back</button>
             <h1>Rainwater Harvesting</h1>
         </header>
 
@@ -32,6 +36,20 @@
             </section>
         </main>
     </div>
+    <section class="contribution-card">
+        <h2>Show us how you saved & reused!</h2>
+        <p>Upload a photo or video of your harvesting setup or reuse method to earn points.</p>
+
+        <div class="upload-zone">
+            <input type="file" id="rainProof" accept="image/*,video/*">
+            <label for="rainProof" class="custom-file-upload">📁 Choose File</label>
+            <p id="fileNameDisplay">No file chosen</p>
+        </div>
+
+        <button class="submit-btn" onclick="submitRainAction()">Submit to AI X ENV</button>
+    </section>
+
+
     <script src="rainwater.js"></script>
 </body>
 

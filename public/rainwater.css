@@ -1,13 +1,40 @@
+/* ==========================================================
+   1. GLOBAL & BACKGROUND SETTINGS
+   ========================================================== */
 body {
+    margin: 0;
+    padding: 0;
     background: #0a0a0a;
     color: white;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+#bg-video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+    /* Sits behind all content */
+    object-fit: cover;
+    filter: brightness(0.4) contrast(1.1);
+    /* Darkened for text readability */
+    transition: filter 0.5s ease, playbackRate 0.5s ease;
 }
 
 .sub-page-container {
     padding: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
+/* ==========================================================
+   2. GLASSMORPHISM PANELS & LAYOUT
+   ========================================================== */
 .content-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -15,37 +42,187 @@ body {
     margin-top: 40px;
 }
 
-.calculator-card,
-.visualizer {
+.glass-panel {
     background: rgba(255, 255, 255, 0.05);
-    padding: 30px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 20px;
-    border: 1px solid #00d4ff;
+    padding: 30px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
 }
 
+.glass-panel:hover {
+    transform: translateY(-5px);
+    border-color: rgba(0, 212, 255, 0.5);
+}
+
+/* ==========================================================
+   3. TYPOGRAPHY & TITLES
+   ========================================================== */
+.neon-title {
+    text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff;
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #00d4ff;
+}
+
+/* ==========================================================
+   4. FORM ELEMENTS & BUTTONS
+   ========================================================== */
 input {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    background: #222;
-    border: 1px solid #444;
+    padding: 12px;
+    margin: 15px 0;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
     color: white;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
 }
 
+input:focus {
+    border-color: #00d4ff;
+}
+
+/* Transparent Functional Buttons */
+.glass-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.glass-btn:hover {
+    background: rgba(0, 212, 255, 0.2);
+    border-color: #00d4ff;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+}
+
+.glass-btn:active {
+    transform: scale(0.96);
+    /* "Functional" press effect */
+}
+
+/* Back Button Specifics */
+.back-btn {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+/* ==========================================================
+   5. VISUALIZERS & TRACKERS
+   ========================================================== */
 .water-tracker {
-    width: 100px;
-    height: 200px;
-    border: 2px solid #00d4ff;
+    width: 120px;
+    height: 220px;
+    border: 2px solid rgba(0, 212, 255, 0.6);
+    background: rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
     margin: 20px auto;
+    border-radius: 10px;
 }
 
 .fill {
-    background: #00d4ff;
+    background: linear-gradient(to top, #00d4ff, #0088ff);
     position: absolute;
     bottom: 0;
     width: 100%;
     height: 0%;
-    transition: height 1s;
+    transition: height 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+#calcResult {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #00ff88;
+}
+
+/* ==========================================================
+   6. CONTRIBUTION & UPLOAD SECTION
+   ========================================================== */
+.contribution-card {
+    grid-column: 1 / -1;
+    /* Span across both grid columns */
+    background: rgba(0, 255, 136, 0.05);
+    border: 1px dashed #00ff88;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    margin-top: 20px;
+}
+
+.upload-zone {
+    margin: 20px 0;
+    padding: 30px;
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    transition: 0.3s;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.upload-zone:hover {
+    border-color: #00ff88;
+    background: rgba(0, 255, 136, 0.05);
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 12px 24px;
+    cursor: pointer;
+    background: #1a1a1a;
+    border: 1px solid #00ff88;
+    border-radius: 8px;
+    color: #00ff88;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.custom-file-upload:hover {
+    background: #00ff88;
+    color: #000;
+}
+
+.submit-btn {
+    background: #00ff88;
+    color: #000;
+    font-weight: 700;
+    padding: 14px 40px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+}
+
+.submit-btn:hover {
+    box-shadow: 0 0 20px #00ff88;
+    transform: translateY(-3px);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+#fileNameDisplay {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: #aaa;
 }

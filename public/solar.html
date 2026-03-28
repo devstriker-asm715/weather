@@ -8,25 +8,56 @@
 </head>
 
 <body>
+    <video autoplay muted loop id="bg-video">
+        <source src="solar.mp4" type="video/mp4">
+    </video>
+
     <div class="sub-page-container">
         <header>
-            <button onclick="window.location.href='index.html'">← Back</button>
-            <h1>Solar ROI Dashboard</h1>
+            <button class="glass-btn back-btn" onclick="window.location.href='index.html'">← Home</button>
+            <h1 class="neon-title-yellow">Solar Energy Hub</h1>
         </header>
 
         <main class="content-grid">
-            <section class="roi-card">
-                <h2>ROI Calculator</h2>
-                <input type="number" id="panelCount" placeholder="Number of Panels">
-                <button onclick="calculateROI()">Estimate Savings</button>
-                <div id="roiResult"></div>
-            </section>
+            <section class="glass-panel-yellow">
+                <h2>Solar ROI Calculator</h2>
+                <input type="number" id="panelInput" placeholder="Enter number of panels...">
+                <button class="glass-btn-yellow" onclick="calculateSolar()">Estimate Savings</button>
+                <div id="roiResult" class="result-text"></div>
 
+            </section>
             <section class="sunlight-tracker">
                 <h2>Sunlight Tracker</h2>
                 <div class="sun-icon">☀️</div>
                 <p>Peak Sun Hours: 5.5h</p>
                 <p>Energy Generated: <span id="energyVal">0</span> kWh</p>
+            </section>
+
+            <section class="glass-panel-yellow grid-span">
+                <h2>Top Rated Solar Panels (Market)</h2>
+                <div class="product-grid">
+                    <div class="product-card"
+                        onclick="window.open('https://www.amazon.in/Loom-Solar-Panel-125-Watt/dp/B07P7R6V9N', '_blank')">
+                        <img src="https://m.media-amazon.com/images/I/71pM2-u9n9L._SX522_.jpg" alt="Loom Solar">
+                        <h3>Loom Solar 125W</h3>
+                        <p>Mono Perc - High Efficiency</p>
+                        <span>View on Amazon ↗</span>
+                    </div>
+                    <div class="product-card"
+                        onclick="window.open('https://www.flipkart.com/luminous-165-watt-12v-polycrystalline-solar-panel/p/itm5a80f084f705b', '_blank')">
+                        <img src="https://m.media-amazon.com/images/I/41-l8rCgPmL._SX522_.jpg" alt="Luminous Solar">
+                        <h3>Luminous 165W</h3>
+                        <p>Polycrystalline Durable</p>
+                        <span>View on Flipkart ↗</span>
+                    </div>
+                    <div class="product-card"
+                        onclick="window.open('https://www.amazon.in/Microtek-MTK150-12V-Polycrystalline-Solar-Panel/dp/B07D3N8N9P', '_blank')">
+                        <img src="https://m.media-amazon.com/images/I/61SjM1x9ZNL._SX522_.jpg" alt="Microtek Solar">
+                        <h3>Microtek 150W</h3>
+                        <p>Weather Resistant Design</p>
+                        <span>View on Amazon ↗</span>
+                    </div>
+                </div>
             </section>
         </main>
     </div>

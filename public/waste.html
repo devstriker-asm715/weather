@@ -3,36 +3,51 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Eco Waste | AI X ENV</title>
-    <link rel="stylesheet" href="subpage-common.css">
+    <title>Eco Waste Management | AI X ENV</title>
     <link rel="stylesheet" href="waste.css">
 </head>
 
 <body>
-    <div class="glass-container">
+    <video autoplay muted loop id="bg-video">
+        <source src="waste-bg.mp4" type="video/mp4">
+    </video>
+
+    <div class="sub-page-container">
         <header>
-            <button class="back-btn" onclick="window.location.href='index.html'">← Home</button>
-            <h1 class="neon-text">Eco Waste Tracker</h1>
+            <button class="glass-btn back-btn" onclick="window.location.href='index.html'">← Home</button>
+            <h1 class="neon-title-green">Waste Diversion Hub</h1>
         </header>
 
-        <div class="stats-grid">
-            <div class="card bin-section">
-                <h3>Current Segregation Score</h3>
-                <div class="score-circle" id="segScore">85%</div>
-                <div class="bin-container">
-                    <div class="bin green">Organic</div>
-                    <div class="bin blue">Recycle</div>
-                    <div class="bin red">Hazard</div>
+        <main class="content-grid">
+            <section class="glass-panel-green">
+                <h2>Live Waste Metrics</h2>
+                <div class="waste-counter">
+                    <span id="totalGarbage">45.2</span> <small>kg</small>
                 </div>
-            </div>
+                <p>Net Garbage Dumped (Campus Total)</p>
+                <div class="impact-alert">
+                    "You prevented 2kg waste from landfill this week"
+                </div>
+            </section>
 
-            <div class="card smart-feature">
-                <h3>Impact Analysis</h3>
-                <p class="impact-text">"You prevented <span id="landfillWeight">2.4</span>kg waste from landfill this
-                    week."</p>
-                <div class="transform-box" id="transformAnim">♻️ ➜ 🌱</div>
-            </div>
-        </div>
+            <section class="glass-panel-green">
+                <h2>Validate Your Disposal</h2>
+                <p>Select bin type and upload proof to earn points.</p>
+
+                <div class="bin-selector">
+                    <button class="bin-btn organic" onclick="setBin('organic')">Organic</button>
+                    <button class="bin-btn recycle" onclick="setBin('recyclable')">Recycle</button>
+                    <button class="bin-btn hazard" onclick="setBin('hazardous')">Hazard</button>
+                </div>
+
+                <div class="upload-area">
+                    <input type="file" id="wasteProof" accept="image/*" style="display:none">
+                    <label for="wasteProof" class="glass-btn-upload">📸 Capture Proof</label>
+                    <p id="fileStatus">No image selected</p>
+                    <button class="submit-btn-green" onclick="validateWaste()">Verify & Earn</button>
+                </div>
+            </section>
+        </main>
     </div>
     <script src="waste.js"></script>
 </body>
