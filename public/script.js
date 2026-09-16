@@ -268,8 +268,8 @@ async function showAuth(type) {
 };
 
 async function signInWithProvider(providerName) {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: providerName, // 'google' or 'github'
+  const { data, error } = await supabaseClient.auth.signInWithOAuth({
+    provider: providerName, 
   });
 
   if (error) alert("Social Login Error: " + error.message);
@@ -330,19 +330,28 @@ async function getNews(city = "India") {
 // ===============================
 // AI FUNCTION (The Logic You Asked For)
 // ===============================
+// Add this so users can press 'Enter' on their keyboard to ask the AI
+function handleEnter(event) {
+  if (event.key === 'Enter') askAI();
+}
+
 async function askAI() {
   const promptInput = document.getElementById("prompt");
   const responseDiv = document.getElementById("response");
-  const query = promptInput.value;
+  const askBtn = document.getElementById("askBtn");
+  const query = promptInput.value.trim();
 
-  if (!query) return alert("Please enter a question! I am open to doubts");
+  if (!query) return alert("Please enter a question! I am open to doubts.");
 
-  // UI Feedback: Show the user the AI is thinking
-  responseDiv.style.color = "#00ff88"; // Keep it vibrant!
+  // 1. UI Loading State
+  promptInput.disabled = true;
+  askBtn.disabled = true;
+  askBtn.innerText = "Thinking...";
+  responseDiv.style.color = "#888"; 
   responseDiv.innerText = "Consulting Sustainability AI...";
 
   try {
-    const response = await fetch(`${getBaseUrl()}/api/ai`, {
+    const response = await fetch(`/api/ask`, { // Ensure this matches your Vercel route!
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt: query })
@@ -351,21 +360,26 @@ async function askAI() {
     if (!response.ok) throw new Error("API Offline");
 
     const data = await response.json();
-    responseDiv.innerText = data.reply;
+    
+    // 2. Simple Markdown Parser (Makes **bold** text actually bold)
+    let formattedText = data.reply
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+    // 3. Display the response
+    responseDiv.style.color = "#00ff88"; // Your neon green theme
+    responseDiv.innerHTML = formattedText; // Use innerHTML so the bold tags work
 
   } catch (err) {
-    // Smart Fallback: If the backend isn't ready, provide a simulated AI answer
     console.error("AI Error:", err);
-    setTimeout(() => {
-      const fallbacks = [
-        `To optimize ${query}, consider life-cycle assessments and reducing carbon overhead.`,
-        `Regarding ${query}: Minimalist consumption is the most effective sustainability strategy.`,
-        `Interesting point on ${query}. Have you looked into the 'Circular Economy' approach for this?`
-      ];
-      const randomFallback = fallbacks[Math.floor(Math.random() * fallbacks.length)];
-      responseDiv.innerText = `${randomFallback} (Demo Mode)`;
-      responseDiv.style.color = "#888";
-    }, 1200);
+    responseDiv.innerText = "The AI is currently resting. Try again later! 🌱";
+    responseDiv.style.color = "#ff4444"; // Red for error
+  } finally {
+    // 4. Re-enable the inputs
+    promptInput.disabled = false;
+    askBtn.disabled = false;
+    askBtn.innerText = "Ask AI";
+    promptInput.focus();
   }
 }
 

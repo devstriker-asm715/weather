@@ -31,9 +31,65 @@
             <p>You have contributed to a significant reduction in campus carbon overhead.</p>
         </div>
     </div>
+    <div class="card" style="margin-top: 20px;">
+            <h3>Verify Tree Planting</h3>
+            <p style="font-size: 0.9rem; color: #888;">Upload a photo of your planted sapling for AI verification.</p>
+            
+            <input type="file" id="forestProof" accept="image/*" style="margin: 10px 0;">
+            <button id="verifyBtn" class="action-btn" onclick="verifyForestProof()">Scan with AI</button>
+            
+            <p id="ai-status" style="margin-top: 10px; color: #00ff88; font-size: 0.9rem;"></p>
+        </div>
     <script>
         // Simulate tree growth based on points
         setTimeout(() => { document.getElementById('tree').innerText = "🌳"; }, 3000);
+        async function verifyForestProof() {
+                const fileInput = document.getElementById('forestProof');
+                const statusText = document.getElementById('ai-status');
+                const btn = document.getElementById('verifyBtn');
+
+                if (!fileInput.files || fileInput.files.length === 0) {
+                    alert("Please select an image first.");
+                    return;
+                }
+
+                btn.innerText = "Scanning...";
+                btn.disabled = true;
+                statusText.innerText = "AI is analyzing your sapling...";
+
+                const reader = new FileReader();
+                reader.onloadend = async () => {
+                    const base64Data = reader.result;
+
+                    try {
+                        const response = await fetch('/api/verify-proof', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                imageBase64: base64Data,
+                                category: "reforestation",
+                                actionText: "Planted a tree or sapling" // Tells the AI exactly what to look for
+                            })
+                        });
+
+                        const result = await response.json();
+
+                        if (result.success) {
+                            statusText.innerText = "✅ Verified! " + result.analysis;
+                            // Optionally, update the CO2 counter here
+                        } else {
+                            statusText.innerText = "❌ Failed: " + result.analysis;
+                            statusText.style.color = "#ff4444";
+                        }
+                    } catch (error) {
+                        statusText.innerText = "Server connection failed.";
+                    } finally {
+                        btn.innerText = "Scan with AI";
+                        btn.disabled = false;
+                    }
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            }
     </script>
 </body>
 

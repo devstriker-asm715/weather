@@ -90,9 +90,9 @@
                 GitHub</button>
         </div>
 
-        <p class="auth-footer">
-            Don't have an account? <span onclick="showAuth('signup')"
-                style="color: var(--primary-neon); cursor: pointer;">Create one</span>
+        <p class="auth-footer" id="auth-footer-text"></p>
+        Don't have an account? <span onclick="showAuth('signup')"
+            style="color: var(--primary-neon); cursor: pointer;">Create one</span>
         </p>
 
         <button class="close-text-btn" onclick="document.getElementById('auth-modal').style.display='none'">Maybe
@@ -189,22 +189,14 @@
 
     <section class="ai-section">
         <h2>🤖 Ask Sustainability AI</h2>
-        <input type="text" id="prompt" placeholder="Ask about sustainability..." />
-        <button onclick="askAI()">Ask AI</button>
-        <div id="response" style="margin-top: 15px; color: #28a745;"></div>
+        <input type="text" id="prompt" placeholder="Ask about sustainability..." onkeypress="handleEnter(event)" />
+        <button id="askBtn" onclick="askAI()">Ask AI</button>
+
+        <!-- white-space: pre-wrap is the secret to making AI responses readable -->
+        <div id="response"
+            style="margin-top: 15px; color: #00ff88; white-space: pre-wrap; line-height: 1.5; text-align: left;"></div>
     </section>
 
-    <div id="contributionPanel" class="modal-panel" style="display:none;">
-        <h2>🌱 Submit Contribution</h2>
-        <br>
-        <select id="actionSelect"></select>
-        <br><br>
-        <p>Upload Proof (Image/Video):</p>
-        <input type="file" id="proofUpload">
-        <br><br>
-        <button onclick="submitContribution()" class="action-btn">Submit Action</button>
-        <button onclick="closeContributionPanel()">Close</button>
-    </div>
 
     <div id="suggestionPanel" class="modal-panel" style="display:none;">
         <h2>🌍 Optimization Suggestions</h2>

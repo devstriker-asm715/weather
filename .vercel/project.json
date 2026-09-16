@@ -1,1 +1,8 @@
 {"projectId":"prj_jSw6vE4LAA8TSjeFQTuggFnfjIlx","orgId":"team_oIkBxm4tRpmBecEAHMlOFEDi","projectName":"web-1"}
+{
+  "type": "module",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "axios": "^1.6.0"
+  }
+}
